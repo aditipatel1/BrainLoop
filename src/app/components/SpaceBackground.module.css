@@ -1,0 +1,274 @@
+.spaceContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+  
+  .spaceCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .foregroundElements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 2;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transform-style: preserve-3d;
+  }
+  
+  .particleAsteroid {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 2;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transform-style: preserve-3d;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    filter: blur(0.5px);
+  }
+  
+  /* Primary planet with atmospheric glow */
+  .distantPlanet1 {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, 
+      rgba(140, 55, 230, 0.2), 
+      rgba(70, 20, 195, 0.35)
+    );
+    box-shadow: 0 0 40px rgba(100, 50, 220, 0.15);
+    opacity: 0.6;
+    animation: rotatePlanet1 240s linear infinite;
+    transform-origin: center center;
+  }
+  
+  /* Planet surface features */
+  .planetSurface {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: 
+      radial-gradient(circle at 70% 35%, rgba(188, 145, 255, 0.15) 0%, transparent 20%),
+      radial-gradient(circle at 30% 65%, rgba(146, 103, 255, 0.1) 0%, transparent 25%),
+      radial-gradient(circle at 45% 20%, rgba(94, 23, 235, 0.1) 0%, transparent 15%),
+      radial-gradient(ellipse at 40% 80%, rgba(145, 70, 255, 0.1) 0%, transparent 30%),
+      radial-gradient(ellipse at 85% 60%, rgba(71, 7, 155, 0.15) 0%, transparent 20%);
+    opacity: 0.9;
+    mix-blend-mode: soft-light;
+  }
+  
+  /* Planet glow */
+  .planetGlow {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle at center, rgba(136, 84, 255, 0.15) 0%, transparent 70%);
+    z-index: -1;
+    filter: blur(10px);
+  }
+  
+  /* Secondary planet (smaller with rings) */
+  .distantPlanet2 {
+    position: absolute;
+    bottom: 25%;
+    left: 8%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, 
+      rgba(0, 164, 225, 0.25), 
+      rgba(46, 36, 112, 0.3)
+    );
+    box-shadow: 0 0 30px rgba(0, 121, 235, 0.15);
+    opacity: 0.5;
+    animation: rotatePlanet2 180s linear infinite;
+    transform-origin: center center;
+  }
+  
+  /* Planet rings */
+  .planetRings {
+    position: absolute;
+    width: 200%;
+    height: 40%;
+    left: -50%;
+    top: 30%;
+    border-radius: 50%;
+    border: 2px solid rgba(156, 135, 255, 0.2);
+    box-shadow: 
+      0 0 10px rgba(156, 135, 255, 0.2),
+      inset 0 0 10px rgba(156, 135, 255, 0.2);
+    transform: rotateX(75deg);
+    opacity: 0.7;
+    filter: blur(1px);
+  }
+  
+  /* CSS animation for shooting star */
+  .shootingStar {
+    position: absolute;
+    top: 20%;
+    left: -5%;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9), transparent);
+    transform: rotate(15deg);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    animation: shootingStarMove 30s ease-out infinite;
+  }
+  
+  .shootingStar::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 12px rgba(156, 135, 255, 0.9);
+  }
+  
+  .shootingStar2 {
+    position: absolute;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.8) 40%, transparent);
+    border-radius: 50%;
+    box-shadow: 
+      0 0 5px rgba(255, 255, 255, 0.8),
+      0 0 10px rgba(255, 255, 255, 0.5),
+      0 0 15px rgba(156, 135, 255, 0.5);
+    transform: rotate(25deg);
+    z-index: 2;
+  }
+  
+  .shootingStar2::after {
+    content: '';
+    position: absolute;
+    top: -1.5px;
+    left: 0;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(156, 135, 255, 0.8);
+  }
+  
+  /* Efficient CSS animations */
+  @keyframes rotatePlanet1 {
+    0% { 
+      transform: rotate(0deg); 
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.1);
+    }
+    100% { 
+      transform: rotate(360deg); 
+      filter: brightness(1);
+    }
+  }
+  
+  @keyframes rotatePlanet2 {
+    0% { 
+      transform: rotate(0deg);
+      filter: brightness(0.9);
+    }
+    50% {
+      filter: brightness(1.1);
+    }
+    100% { 
+      transform: rotate(-360deg);
+      filter: brightness(0.9);
+    }
+  }
+  
+  @keyframes shootingStarMove {
+    0% { 
+      left: -10%;
+      top: 15%;
+      opacity: 0;
+      width: 80px;
+    }
+    2% {
+      opacity: 0.2;
+    }
+    5% {
+      opacity: 1;
+      width: 120px;
+    }
+    15% {
+      opacity: 1;
+      width: 100px;
+    }
+    20% {
+      left: 120%;
+      top: 25%;
+      opacity: 0;
+      width: 80px;
+    }
+    100% {
+      left: 120%;
+      top: 25%;
+      opacity: 0;
+    }
+  }
+  
+  /* Media queries */
+  @media (max-width: 768px) {
+    .distantPlanet1 {
+      width: 60px;
+      height: 60px;
+      top: 15%;
+      right: 8%;
+    }
+    
+    .distantPlanet2 {
+      width: 35px;
+      height: 35px;
+    }
+    
+    .planetRings {
+      width: 180%;
+      border-width: 1px;
+    }
+  }
+  
+  @media (min-width: 1800px) {
+    .distantPlanet1 {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .distantPlanet2 {
+      width: 70px;
+      height: 70px;
+    }
+  } 
